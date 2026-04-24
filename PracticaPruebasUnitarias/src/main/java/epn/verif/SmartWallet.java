@@ -13,13 +13,32 @@ public class SmartWallet {
     }
 
     public boolean deposit(double amount){
-        //TODO: Implementar lógica de depósito
-        return false;
+        if (amount <= 0) return false;
+
+        double potencialCashback = 0;
+        if (amount > 100){
+            potencialCashback = amount * 0.01;
+        }
+
+        double finalBalance = balance + amount + potencialCashback;
+
+        if (userType.equals("Standard") && finalBalance > 5000) {
+            return false;
+        }
+
+        this.balance = finalBalance;
+        return true;
     }
 
     public boolean withdraw(double amount){
-        //TODO: Implementar lógica de retiro
-        return false;
+        if (amount <= 0 || amount > balance) return false;
+
+        this.balance -= amount;
+
+        if (this.balance == 0) {
+            this.status = "Inactiva";
+        }
+        return true;
     }
 
     public double getBalance() {
